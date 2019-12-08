@@ -13,6 +13,9 @@ class RBM:
         self.encode_data = tf.constant([0.])
         self.count = 0
     def isactive(self,x):
+        '''
+        Judge the units is active(units ?=1)
+        '''
         ac = x -  tf.random.uniform([x.shape[0],x.shape[1]])
         ac = ac.numpy()
         ac[ac>0]=1
@@ -32,6 +35,9 @@ class RBM:
         #else:
         #    return False
     def new_loss(self,w,b0,b1):
+        '''
+        If you want compaer gradient and CD,you can use this function.
+        '''
         u0_ = tf.nn.sigmoid(tf.add(tf.matmul(self.data,w),b0))#i*500
         u0  = isactive(u0_)#激活状态
         _a1 = tf.nn.sigmoid(tf.add(tf.matmul(u0,tf.transpose(w)),b1))#重构i*784
@@ -39,6 +45,9 @@ class RBM:
         return loss_
             #return tape.gradient(loss_,self.W)
     def encode_compute(self,data_all):
+        '''
+        You can get all encode data by this function after RBM traning.
+        '''
         self.encode_data = tf.nn.sigmoid(tf.add(tf.matmul(data_all,self.W),self.b))
         return self.encode_data
     def main(self):
