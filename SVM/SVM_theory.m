@@ -1,8 +1,8 @@
 %{
-ÈÎ¸øa1,a2,½øĞĞÇó½â
+ä»»ç»™a1,a2,è¿›è¡Œæ±‚è§£
 a1y1 + a2y2 = c
 a2_new_unc = a2_old + y2(E1-E2)/(k11+k22-2k12)
-    E1 = |f(x1)-y1|¡¢E2 = |f(x2)-y2|
+    E1 = |f(x1)-y1|ã€E2 = |f(x2)-y2|
     k11 = x1'x1,k22 = x2'x2,k12 = x1'x2
 if y1 ~= y2
     L = max(0,a2-a1)
@@ -19,7 +19,7 @@ maxIter = 100;
 b = 0;
 alpha = zeros(size_m,1);
 iter = 0;
-%Ê¹ÓÃ¸ßË¹ºËº¯ÊıµÄÖ§³ÖÏòÁ¿»úÊµÏÖ
+%ä½¿ç”¨é«˜æ–¯æ ¸å‡½æ•°çš„æ”¯æŒå‘é‡æœºå®ç°
 while iter<maxIter
     for i = 1:size_m
         fxi = Gausskernel(data_x_train,data_x_train(i,:))*(alpha.*data_y_train)+b;
@@ -50,7 +50,7 @@ while iter<maxIter
              end
              alpha(i) = alpha(i)+data_y_train(i)*data_y_train(j)*(alpha2old-alpha(j));
 %{    
-  ×¢ÊÍ²¿·ÖÎªÖÜÖ¾»ª½ÌÊÚ¡¶»úÆ÷Ñ§Ï°¡·ÉÏbµÄ¼ÆËã·½·¨£¬Ä¿Ç°´úÂë²ÉÓÃ¡¶Í³¼ÆÑ§Ï°·½·¨¡·µÄ¹«Ê½
+  æ³¨é‡Šéƒ¨åˆ†ä¸ºå‘¨å¿—åæ•™æˆã€Šæœºå™¨å­¦ä¹ ã€‹ä¸Šbçš„è®¡ç®—æ–¹æ³•ï¼Œç›®å‰ä»£ç é‡‡ç”¨ã€Šç»Ÿè®¡å­¦ä¹ æ–¹æ³•ã€‹çš„å…¬å¼
 data_vector = data_x_train(alpha~=0,:);
 %              data_vector_label = data_y_train(alpha~=0);
 %              [num_data_vector,~] = size(data_vector);
@@ -80,18 +80,18 @@ data_vector = data_x_train(alpha~=0,:);
         iter = 0;
     end
     if rem(iter,maxIter/100) == 0
-        disp([num2str(iter/(maxIter/100)),'%ÒÑÍê³É'])
+        disp([num2str(iter/(maxIter/100)),'%å·²å®Œæˆ'])
     end
 end
-disp('ÑµÁ·Íê³É')
-yuce =  [];
+disp('è®­ç»ƒå®Œæˆ')
+pre =  [];
 for i = 1:length(data_x_test)
-    yuce = [yuce;Gausskernel(data_x_train,data_x_test(i,:))*(alpha.*data_y_train)+b];
+    pre = [pre;Gausskernel(data_x_train,data_x_test(i,:))*(alpha.*data_y_train)+b];
 end
-yuce(yuce>0) = 1;
-yuce(yuce<0) = -1;
+pre(pre>0) = 1;
+pre(pre<0) = -1;
 
-answer{1,1} = sum(yuce==data_y_test)/length(data_y_test);
+answer{1,1} = sum(pre==data_y_test)/length(data_y_test);
 if Gausskernel(data_x_train,new_data)*(alpha.*data_y_train)+b>0
     answer{1,2} = 1;
 elseif Gausskernel(data_x_train,new_data)*(alpha.*data_y_train)+b<0
@@ -99,6 +99,6 @@ elseif Gausskernel(data_x_train,new_data)*(alpha.*data_y_train)+b<0
 end
 %     zhunquelv =[zhunquelv,sum((yuce-data_y_test)==0)/length(yuce)];
 %     jindu = jindu+1;
-%     disp([num2str(jindu/21*100),'%ÒÑÍê³É']
+%     disp([num2str(jindu/21*100),'%å·²å®Œæˆ']
 % plot([4:0.05:5],zhunquelv,'r-')
 end
