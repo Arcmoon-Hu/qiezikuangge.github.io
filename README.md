@@ -1,2 +1,2 @@
 # my-machinelearning
-Just some simple machine learning code base on matlab
+Just some simple machine learning code base on matlab or python
